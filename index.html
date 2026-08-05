@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontline Communication Tactics (Set 2)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        ttn: {
+                            navy: '#0C2340',
+                            blue: '#005EB8',
+                            cyan: '#59CBE8',
+                            orange: '#FE5000',
+                            darkorange: '#E04600',
+                            slate: '#333F48',
+                            ice: '#DBE2E9',
+                            success: '#00BF6F',
+                            gold: '#FFC72C'
+                        }
+                    },
+                    boxShadow: {
+                        ttn: '0px 4px 12px rgba(12, 35, 64, 0.08)'
+                    },
+                    borderRadius: {
+                        'ttn-sm': '4px',
+                        'ttn-card': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Strict layout lock to fit Mindsmith AI iframe with 0 scrollbars */
+        html, body {
+            height: 100vh !important;
+            width: 100vw !important;
+            background-color: #ffffff !important;
+            margin: 0;
+            padding: 0;
+            overflow: hidden !important;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            color: #333F48;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #main-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, .font-heading, button {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        button:focus-visible {
+            outline: 2px solid #59CBE8 !important;
+            outline-offset: 2px !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.25s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-ttn-blue selection:text-white bg-white">
+
+    <!-- Main Content Container - Locked to Viewport Height -->
+    <main id="main-container" class="w-full max-w-6xl mx-auto p-2 sm:p-4 bg-white">
+
+        <!-- SCENARIO CHALLENGE PANEL -->
+        <section id="mode-quiz" class="fade-in flex-grow flex flex-col w-full h-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-4 items-stretch h-full">
+
+                <!-- Left Column: Fixed Aspect Video Player -->
+                <div class="lg:col-span-6 bg-white rounded-ttn-card shadow-ttn border border-ttn-ice overflow-hidden flex flex-col h-full">
+                    
+                    <!-- Video Header Bar -->
+                    <div class="bg-ttn-navy text-white px-3.5 py-2 flex items-center justify-between border-b border-ttn-ice/10 shrink-0">
+                        <div class="flex items-center gap-2.5">
+                            <span class="bg-ttn-blue text-white px-2 py-0.5 rounded-ttn-sm text-[11px] font-bold uppercase tracking-wider" id="quiz-step-badge">Turn 1 of 4</span>
+                            <span class="text-xs text-slate-300 font-sans hidden sm:inline">Listen & Identify the Tactic</span>
+                        </div>
+                        <div id="play-start-note" class="bg-ttn-gold text-ttn-navy font-bold text-[11px] px-2 py-0.5 rounded-ttn-sm flex items-center gap-1 font-heading shadow-xs animate-pulse">
+                            <i class="fa-solid fa-circle-play"></i> Press play to start
+                        </div>
+                    </div>
+
+                    <!-- Video Container - Locked 16:9 Ratio -->
+                    <div class="relative bg-black w-full flex-grow flex items-center justify-center overflow-hidden">
+                        <video id="main-video-player" class="absolute inset-0 w-full h-full object-contain" controls preload="metadata" poster="Looking_at_camera_20260805.jpeg">
+                            <source id="video-source" src="Turn_1_20260805.mp4" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+                    </div>
+
+                    <!-- Video Navigation Control Bar -->
+                    <div class="px-3 py-2 bg-slate-50 border-t border-ttn-ice flex-shrink-0 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-bold text-ttn-slate uppercase font-heading hidden sm:inline">Select Clip:</span>
+                            <div id="turn-buttons-container" class="flex gap-1.5"></div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="prevTurn()" id="prev-turn-btn" class="px-2.5 py-1 rounded-ttn-sm border border-slate-300 text-ttn-slate hover:bg-slate-100 text-[11px] font-bold uppercase transition-all duration-200 disabled:opacity-40 cursor-pointer">
+                                <i class="fa-solid fa-chevron-left mr-1"></i> Prev
+                            </button>
+                            <button onclick="nextTurn()" id="next-turn-btn" class="px-3.5 py-1 rounded-ttn-sm bg-ttn-blue text-white hover:bg-ttn-blue/90 text-[11px] font-bold uppercase transition-all duration-200 cursor-pointer">
+                                Next <i class="fa-solid fa-chevron-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Tactic & Response Guessing Panel -->
+                <div class="lg:col-span-6 bg-white rounded-ttn-card shadow-ttn border border-ttn-ice p-3 sm:p-4 flex flex-col h-full">
+                    
+                    <div class="flex items-center justify-between mb-1.5 shrink-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-ttn-navy bg-slate-100 px-2 py-0.5 rounded-ttn-sm font-heading">
+                            Identify Tactic & Response
+                        </span>
+                        <span class="text-[11px] font-bold text-ttn-slate font-heading" id="quiz-score">Score: 0/4</span>
+                    </div>
+
+                    <h2 class="text-xs sm:text-sm font-bold text-ttn-navy mb-1 font-heading leading-tight shrink-0">Which Manipulation Tactic and Effective Response match this video clip?</h2>
+                    <p class="text-[10px] sm:text-[11px] text-slate-500 mb-2 font-sans leading-tight shrink-0">Watch the patient clip, then select the corresponding tactic & response strategy below:</p>
+
+                    <!-- Options List Container -->
+                    <div class="flex-grow flex flex-col justify-between gap-1.5" id="tactic-options-container">
+                        <!-- Rendered by JS -->
+                    </div>
+
+                    <!-- Feedback Box -->
+                    <div id="quiz-feedback-box" class="mt-2 p-2 rounded-ttn-sm border hidden transition-all duration-300 shrink-0">
+                        <div id="quiz-feedback-header" class="flex items-center gap-1.5 mb-0.5 font-bold text-[11px] font-heading"></div>
+                        <div id="quiz-feedback-desc" class="text-[10px] text-slate-600 font-sans leading-tight"></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SUMMARY / SCORE SCREEN -->
+        <section id="mode-summary" class="fade-in hidden w-full h-full flex flex-col items-center justify-center">
+            <div class="w-full max-w-md bg-white rounded-ttn-card shadow-ttn border border-ttn-ice overflow-hidden">
+                <div class="bg-ttn-navy text-white p-6 text-center border-b border-ttn-ice/20">
+                    <div class="w-14 h-14 mx-auto rounded-full bg-ttn-orange/20 border-2 border-ttn-orange flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-trophy text-ttn-orange text-2xl"></i>
+                    </div>
+                    <h2 class="text-lg font-bold font-heading uppercase tracking-wide">Challenge Complete</h2>
+                </div>
+
+                <div class="p-6 text-center">
+                    <div class="mb-5">
+                        <span class="text-[12px] font-bold uppercase text-slate-400 font-heading block mb-1">Your Final Score</span>
+                        <div class="text-4xl font-extrabold text-ttn-navy font-heading" id="summary-score-text">0 / 4</div>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <button onclick="restartChallenge()" class="px-6 py-3 bg-ttn-orange hover:bg-ttn-darkorange text-white font-bold text-xs uppercase rounded-ttn-sm shadow-md transition-all flex items-center justify-center gap-2 font-heading cursor-pointer">
+                            <i class="fa-solid fa-rotate-left"></i> Retake Scenario Challenge
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const TACTICS_DATA = [
+            { 
+                id: 1, 
+                tactic: "Status Assertion", 
+                filename: "Turn_1_20260805.mp4", 
+                response: "Every patient receives the same high standard of care. Now, let me see how I can help you today.",
+                explanation: "The patient leverages perceived status or VIP standing to demand special treatment outside standard practice guidelines." 
+            },
+            { 
+                id: 2, 
+                tactic: "Bypassing Process", 
+                filename: "Turn_2_20260805.mp4", 
+                response: "I understand that may have been your experience before. Our process exists to make sure everyone receives safe, consistent care. Let me explain how it works and find the best way to help you.",
+                explanation: "The patient attempts to skip administrative procedures and demand direct access to senior staff or clinicians." 
+            },
+            { 
+                id: 3, 
+                tactic: "Long Standing Patient", 
+                filename: "Turn_3_20260805.mp4", 
+                response: "We really do value your loyalty to the practice. Every patient here receives the same standard of care and that includes you. Let me see where you are in the queue.",
+                explanation: "The patient uses longevity as a patient to demand priority service over other waiting patients." 
+            },
+            { 
+                id: 4, 
+                tactic: "Dismissing Expertise", 
+                filename: "Turn_4_20260805.mp4", 
+                response: "I am the right person to help you with this. If you would like to speak with someone else, I am happy to arrange that through the correct process.",
+                explanation: "The patient undermines frontline staff roles and authority to demand immediate escalation." 
+            }
+        ];
+
+        let currentTurnIndex = 0;
+        let userScore = 0;
+        let turnAnswers = {}; 
+        let turnShuffledOptions = {}; 
+
+        const videoPlayer = document.getElementById('main-video-player');
+        const videoSource = document.getElementById('video-source');
+
+        window.onload = function() {
+            renderTurnButtons();
+            loadTurn(0, false);
+        };
+
+        function renderTurnButtons() {
+            const container = document.getElementById('turn-buttons-container');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            TACTICS_DATA.forEach((item, index) => {
+                const btn = document.createElement('button');
+                btn.innerText = index + 1;
+                btn.onclick = () => { loadTurn(index, true); };
+                
+                if (index === currentTurnIndex) {
+                    btn.className = "w-5 h-5 rounded-ttn-sm font-bold text-[10px] bg-ttn-orange text-white shadow-sm font-heading cursor-pointer flex items-center justify-center";
+                } else if (turnAnswers[index] !== undefined) {
+                    btn.className = "w-5 h-5 rounded-ttn-sm font-bold text-[10px] bg-slate-200 text-slate-500 border border-slate-300 font-heading cursor-pointer flex items-center justify-center";
+                } else {
+                    btn.className = "w-5 h-5 rounded-ttn-sm font-bold text-[10px] bg-white text-ttn-slate border border-slate-300 hover:bg-slate-100 font-heading cursor-pointer flex items-center justify-center";
+                }
+                container.appendChild(btn);
+            });
+        }
+
+        function loadTurn(index, autoPlay = false) {
+            currentTurnIndex = index;
+            const data = TACTICS_DATA[index];
+
+            document.getElementById('mode-quiz').classList.remove('hidden');
+            document.getElementById('mode-summary').classList.add('hidden');
+            document.getElementById('quiz-step-badge').innerText = `Turn ${index + 1} of 4`;
+            
+            const playStartNote = document.getElementById('play-start-note');
+            if (index === 0 && !autoPlay && turnAnswers[0] === undefined) {
+                playStartNote.classList.remove('hidden');
+            } else {
+                playStartNote.classList.add('hidden');
+            }
+
+            document.getElementById('prev-turn-btn').disabled = (index === 0);
+            const nextBtn = document.getElementById('next-turn-btn');
+            if (index === TACTICS_DATA.length - 1) {
+                nextBtn.innerHTML = `View Score <i class="fa-solid fa-trophy ml-1"></i>`;
+            } else {
+                nextBtn.innerHTML = `Next <i class="fa-solid fa-chevron-right ml-1"></i>`;
+            }
+
+            renderTurnButtons();
+
+            if (videoSource && videoPlayer) {
+                videoSource.src = data.filename;
+                videoPlayer.load();
+                if (autoPlay) {
+                    videoPlayer.play().catch(e => console.log('Autoplay blocked:', e));
+                }
+            }
+
+            renderQuizOptions(data);
+        }
+
+        function renderQuizOptions(currentData) {
+            const container = document.getElementById('tactic-options-container');
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            container.innerHTML = '';
+            feedbackBox.classList.add('hidden');
+
+            if (!turnShuffledOptions[currentTurnIndex]) {
+                turnShuffledOptions[currentTurnIndex] = [...TACTICS_DATA].sort(() => Math.random() - 0.5);
+            }
+            
+            const shuffledTactics = turnShuffledOptions[currentTurnIndex];
+            const previousAnswerId = turnAnswers[currentTurnIndex];
+            const isAnswered = previousAnswerId !== undefined;
+
+            shuffledTactics.forEach((item) => {
+                const btn = document.createElement('button');
+                const isCorrectAnswer = (item.id === currentData.id);
+                const isUserChoice = (item.id === previousAnswerId);
+
+                if (!isAnswered) {
+                    btn.className = "w-full text-left p-2 rounded-ttn-sm border border-slate-200 hover:border-ttn-blue hover:bg-slate-50 transition-all duration-200 flex flex-col justify-center bg-white shadow-sm cursor-pointer group";
+                    btn.innerHTML = `
+                        <div class="flex items-center justify-between mb-0.5">
+                            <span class="text-[11px] font-bold text-ttn-navy font-heading">${item.tactic}</span>
+                            <i class="fa-solid fa-chevron-right text-[9px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                        <p class="text-[10px] text-slate-600 font-sans italic leading-tight">"${item.response}"</p>
+                    `;
+                    btn.onclick = () => checkQuizAnswer(item.id, currentData.id);
+                } else {
+                    btn.disabled = true;
+                    if (isUserChoice) {
+                        if (isCorrectAnswer) {
+                            btn.className = "w-full text-left p-2 rounded-ttn-sm border border-emerald-500 bg-emerald-50 flex flex-col justify-center shadow-sm cursor-not-allowed";
+                            btn.innerHTML = `
+                                <div class="flex items-center justify-between mb-0.5">
+                                    <span class="text-[11px] font-bold text-emerald-900 font-heading"><i class="fa-solid fa-check mr-1 text-emerald-600"></i> ${item.tactic}</span>
+                                    <span class="text-[8px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-ttn-sm font-heading">Your Choice (Correct)</span>
+                                </div>
+                                <p class="text-[10px] text-emerald-800 font-sans italic leading-tight">"${item.response}"</p>
+                            `;
+                        } else {
+                            btn.className = "w-full text-left p-2 rounded-ttn-sm border border-ttn-orange bg-orange-50 flex flex-col justify-center shadow-sm cursor-not-allowed";
+                            btn.innerHTML = `
+                                <div class="flex items-center justify-between mb-0.5">
+                                    <span class="text-[11px] font-bold text-ttn-navy font-heading"><i class="fa-solid fa-xmark mr-1 text-ttn-orange"></i> ${item.tactic}</span>
+                                    <span class="text-[8px] font-bold text-ttn-orange bg-orange-100 px-1.5 py-0.5 rounded-ttn-sm font-heading">Your Choice (Incorrect)</span>
+                                </div>
+                                <p class="text-[10px] text-slate-600 font-sans italic leading-tight">"${item.response}"</p>
+                            `;
+                        }
+                    } else {
+                        btn.className = "w-full text-left p-2 rounded-ttn-sm border border-slate-200 bg-slate-50 opacity-40 flex flex-col justify-center cursor-not-allowed";
+                        btn.innerHTML = `
+                            <span class="text-[11px] font-medium text-slate-500 font-heading leading-tight mb-0.5">${item.tactic}</span>
+                            <p class="text-[10px] text-slate-400 font-sans italic leading-tight">"${item.response}"</p>
+                        `;
+                    }
+                }
+                container.appendChild(btn);
+            });
+
+            if (isAnswered) {
+                const isCorrect = (previousAnswerId === currentData.id);
+                showFeedback(isCorrect, currentData);
+            }
+        }
+
+        function checkQuizAnswer(selectedId, correctId) {
+            if (turnAnswers[currentTurnIndex] !== undefined) return; 
+            
+            turnAnswers[currentTurnIndex] = selectedId;
+            if (selectedId === correctId) {
+                userScore++;
+                document.getElementById('quiz-score').innerText = `Score: ${userScore}/4`;
+            }
+
+            renderTurnButtons();
+            
+            const currentData = TACTICS_DATA.find(d => d.id === correctId);
+            renderQuizOptions(currentData);
+        }
+
+        function showFeedback(isCorrect, currentData) {
+            const box = document.getElementById('quiz-feedback-box');
+            const header = document.getElementById('quiz-feedback-header');
+            const desc = document.getElementById('quiz-feedback-desc');
+
+            box.classList.remove('hidden');
+
+            if (isCorrect) {
+                box.className = "mt-2 p-2 rounded-ttn-sm border border-emerald-200 bg-emerald-50 transition-all duration-300 block shrink-0";
+                header.className = "flex items-center gap-1.5 mb-0.5 font-bold text-[11px] font-heading text-emerald-800";
+                header.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> Correct Identification`;
+                desc.innerText = currentData.explanation;
+            } else {
+                box.className = "mt-2 p-2 rounded-ttn-sm border border-orange-200 bg-orange-50 transition-all duration-300 block shrink-0";
+                header.className = "flex items-center gap-1.5 mb-0.5 font-bold text-[11px] font-heading text-orange-900";
+                header.innerHTML = `<i class="fa-solid fa-circle-xmark text-ttn-orange"></i> Selection Recorded`;
+                desc.innerText = "Your selection has been saved. Continue through the remaining turns to see your final score.";
+            }
+        }
+
+        function prevTurn() {
+            if (currentTurnIndex > 0) {
+                loadTurn(currentTurnIndex - 1, true);
+            }
+        }
+
+        function nextTurn() {
+            if (currentTurnIndex < TACTICS_DATA.length - 1) {
+                loadTurn(currentTurnIndex + 1, true);
+            } else {
+                document.getElementById('mode-quiz').classList.add('hidden');
+                document.getElementById('mode-summary').classList.remove('hidden');
+                document.getElementById('summary-score-text').innerText = `${userScore} / 4`;
+                if(videoPlayer) { videoPlayer.pause(); }
+            }
+        }
+
+        function restartChallenge() {
+            userScore = 0;
+            turnAnswers = {};
+            turnShuffledOptions = {};
+            document.getElementById('quiz-score').innerText = `Score: 0/4`;
+            loadTurn(0, false);
+        }
+    </script>
+</body>
+</html>

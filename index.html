@@ -100,24 +100,24 @@
                     <!-- Video Header Bar -->
                     <div class="bg-ttn-navy text-white px-3.5 py-2 flex items-center justify-between border-b border-ttn-ice/10 shrink-0">
                         <div class="flex items-center gap-2.5">
-                            <span class="bg-ttn-blue text-white px-2 py-0.5 rounded-ttn-sm text-[11px] font-bold uppercase tracking-wider" id="quiz-step-badge">Turn 1 of 4</span>
+                            <span class="bg-ttn-blue text-white px-2 py-0.5 rounded-ttn-sm text-xs font-bold uppercase tracking-wider" id="quiz-step-badge">Turn 1 of 4</span>
                             <span class="text-xs text-slate-300 font-sans hidden sm:inline">Listen & Identify the Tactic</span>
                         </div>
-                        <div id="play-start-note" class="bg-ttn-gold text-ttn-navy font-bold text-[11px] px-2 py-0.5 rounded-ttn-sm flex items-center gap-1 font-heading shadow-xs animate-pulse">
+                        <div id="play-start-note" class="bg-ttn-gold text-ttn-navy font-bold text-xs px-2.5 py-1 rounded-ttn-sm flex items-center gap-1.5 font-heading shadow-xs animate-pulse">
                             <i class="fa-solid fa-circle-play"></i> Press play to start
                         </div>
                     </div>
 
-                    <!-- Video Container - Locked 16:9 Ratio -->
-                    <div class="relative bg-black w-full flex-grow flex items-center justify-center overflow-hidden">
-                        <video id="main-video-player" class="absolute inset-0 w-full h-full object-contain" controls preload="metadata" poster="Looking_at_camera_20260805.jpeg">
+                    <!-- Video Container - Locked 1:1 Square Ratio -->
+                    <div class="relative bg-black w-full flex-grow flex items-center justify-center overflow-hidden aspect-square">
+                        <video id="main-video-player" class="absolute inset-0 w-full h-full object-contain" controls preload="metadata" poster="Looking_at_camera_20260805.png">
                             <source id="video-source" src="Turn_1_20260805.mp4" type="video/mp4">
                             Your browser does not support HTML5 video.
                         </video>
                     </div>
 
                     <!-- Video Navigation Control Bar -->
-                    <div class="px-3 py-2 bg-slate-50 border-t border-ttn-ice flex-shrink-0 flex items-center justify-between">
+                    <div class="px-3.5 py-2.5 bg-slate-50 border-t border-ttn-ice flex-shrink-0 flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <span class="text-[11px] font-bold text-ttn-slate uppercase font-heading hidden sm:inline">Select Clip:</span>
                             <div id="turn-buttons-container" class="flex gap-1.5"></div>
@@ -134,27 +134,27 @@
                 </div>
 
                 <!-- Right Column: Tactic & Response Guessing Panel -->
-                <div class="lg:col-span-6 bg-white rounded-ttn-card shadow-ttn border border-ttn-ice p-3 sm:p-4 flex flex-col h-full">
+                <div class="lg:col-span-6 bg-white rounded-ttn-card shadow-ttn border border-ttn-ice p-4 sm:p-5 flex flex-col h-full overflow-y-auto">
                     
-                    <div class="flex items-center justify-between mb-1.5 shrink-0">
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-ttn-navy bg-slate-100 px-2 py-0.5 rounded-ttn-sm font-heading">
+                    <div class="flex items-center justify-between mb-2 shrink-0">
+                        <span class="text-xs font-bold uppercase tracking-wider text-ttn-navy bg-slate-100 px-2.5 py-1 rounded-ttn-sm font-heading">
                             Identify Tactic & Response
                         </span>
-                        <span class="text-[11px] font-bold text-ttn-slate font-heading" id="quiz-score">Score: 0/4</span>
+                        <span class="text-xs sm:text-sm font-bold text-ttn-slate font-heading" id="quiz-score">Score: 0/4</span>
                     </div>
 
-                    <h2 class="text-xs sm:text-sm font-bold text-ttn-navy mb-1 font-heading leading-tight shrink-0">Which Manipulation Tactic and Effective Response match this video clip?</h2>
-                    <p class="text-[10px] sm:text-[11px] text-slate-500 mb-2 font-sans leading-tight shrink-0">Watch the patient clip, then select the corresponding tactic & response strategy below:</p>
+                    <h2 class="text-sm sm:text-base font-bold text-ttn-navy mb-1 font-heading leading-snug shrink-0">Which Manipulation Tactic and Effective Response match this video clip?</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mb-3 font-sans leading-snug shrink-0">Watch the patient clip, then select the corresponding tactic & response strategy below:</p>
 
-                    <!-- Options List Container -->
-                    <div class="flex-grow flex flex-col justify-between gap-1.5" id="tactic-options-container">
+                    <!-- Options List Container - Tightened Spacing with Larger Cards -->
+                    <div class="flex-grow flex flex-col justify-start gap-2.5 sm:gap-3" id="tactic-options-container">
                         <!-- Rendered by JS -->
                     </div>
 
                     <!-- Feedback Box -->
-                    <div id="quiz-feedback-box" class="mt-2 p-2 rounded-ttn-sm border hidden transition-all duration-300 shrink-0">
-                        <div id="quiz-feedback-header" class="flex items-center gap-1.5 mb-0.5 font-bold text-[11px] font-heading"></div>
-                        <div id="quiz-feedback-desc" class="text-[10px] text-slate-600 font-sans leading-tight"></div>
+                    <div id="quiz-feedback-box" class="mt-3 p-3 rounded-ttn-sm border hidden transition-all duration-300 shrink-0">
+                        <div id="quiz-feedback-header" class="flex items-center gap-2 mb-1 font-bold text-xs sm:text-sm font-heading"></div>
+                        <div id="quiz-feedback-desc" class="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed"></div>
                     </div>
 
                 </div>
@@ -310,42 +310,42 @@
                 const isUserChoice = (item.id === previousAnswerId);
 
                 if (!isAnswered) {
-                    btn.className = "w-full text-left p-2 rounded-ttn-sm border border-slate-200 hover:border-ttn-blue hover:bg-slate-50 transition-all duration-200 flex flex-col justify-center bg-white shadow-sm cursor-pointer group";
+                    btn.className = "w-full text-left p-3 sm:p-3.5 rounded-ttn-sm border border-slate-200 hover:border-ttn-blue hover:bg-blue-50/50 transition-all duration-200 flex flex-col justify-center bg-white shadow-sm cursor-pointer group";
                     btn.innerHTML = `
-                        <div class="flex items-center justify-between mb-0.5">
-                            <span class="text-[11px] font-bold text-ttn-navy font-heading">${item.tactic}</span>
-                            <i class="fa-solid fa-chevron-right text-[9px] text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs sm:text-sm font-bold text-ttn-navy font-heading">${item.tactic}</span>
+                            <i class="fa-solid fa-chevron-right text-xs text-slate-300 group-hover:text-ttn-blue group-hover:translate-x-0.5 transition-all"></i>
                         </div>
-                        <p class="text-[10px] text-slate-600 font-sans italic leading-tight">"${item.response}"</p>
+                        <p class="text-xs sm:text-sm text-slate-600 font-sans italic leading-snug">"${item.response}"</p>
                     `;
                     btn.onclick = () => checkQuizAnswer(item.id, currentData.id);
                 } else {
                     btn.disabled = true;
                     if (isUserChoice) {
                         if (isCorrectAnswer) {
-                            btn.className = "w-full text-left p-2 rounded-ttn-sm border border-emerald-500 bg-emerald-50 flex flex-col justify-center shadow-sm cursor-not-allowed";
+                            btn.className = "w-full text-left p-3 sm:p-3.5 rounded-ttn-sm border-2 border-emerald-500 bg-emerald-50 flex flex-col justify-center shadow-sm cursor-not-allowed";
                             btn.innerHTML = `
-                                <div class="flex items-center justify-between mb-0.5">
-                                    <span class="text-[11px] font-bold text-emerald-900 font-heading"><i class="fa-solid fa-check mr-1 text-emerald-600"></i> ${item.tactic}</span>
-                                    <span class="text-[8px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-ttn-sm font-heading">Your Choice (Correct)</span>
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-xs sm:text-sm font-bold text-emerald-900 font-heading"><i class="fa-solid fa-circle-check mr-1.5 text-emerald-600"></i> ${item.tactic}</span>
+                                    <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-ttn-sm font-heading">Your Choice (Correct)</span>
                                 </div>
-                                <p class="text-[10px] text-emerald-800 font-sans italic leading-tight">"${item.response}"</p>
+                                <p class="text-xs sm:text-sm text-emerald-800 font-sans italic leading-snug">"${item.response}"</p>
                             `;
                         } else {
-                            btn.className = "w-full text-left p-2 rounded-ttn-sm border border-ttn-orange bg-orange-50 flex flex-col justify-center shadow-sm cursor-not-allowed";
+                            btn.className = "w-full text-left p-3 sm:p-3.5 rounded-ttn-sm border-2 border-ttn-orange bg-orange-50 flex flex-col justify-center shadow-sm cursor-not-allowed";
                             btn.innerHTML = `
-                                <div class="flex items-center justify-between mb-0.5">
-                                    <span class="text-[11px] font-bold text-ttn-navy font-heading"><i class="fa-solid fa-xmark mr-1 text-ttn-orange"></i> ${item.tactic}</span>
-                                    <span class="text-[8px] font-bold text-ttn-orange bg-orange-100 px-1.5 py-0.5 rounded-ttn-sm font-heading">Your Choice (Incorrect)</span>
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-xs sm:text-sm font-bold text-ttn-navy font-heading"><i class="fa-solid fa-circle-xmark mr-1.5 text-ttn-orange"></i> ${item.tactic}</span>
+                                    <span class="text-[10px] font-bold text-ttn-orange bg-orange-100 px-2 py-0.5 rounded-ttn-sm font-heading">Your Choice (Incorrect)</span>
                                 </div>
-                                <p class="text-[10px] text-slate-600 font-sans italic leading-tight">"${item.response}"</p>
+                                <p class="text-xs sm:text-sm text-slate-600 font-sans italic leading-snug">"${item.response}"</p>
                             `;
                         }
                     } else {
-                        btn.className = "w-full text-left p-2 rounded-ttn-sm border border-slate-200 bg-slate-50 opacity-40 flex flex-col justify-center cursor-not-allowed";
+                        btn.className = "w-full text-left p-3 sm:p-3.5 rounded-ttn-sm border border-slate-200 bg-slate-50 opacity-40 flex flex-col justify-center cursor-not-allowed";
                         btn.innerHTML = `
-                            <span class="text-[11px] font-medium text-slate-500 font-heading leading-tight mb-0.5">${item.tactic}</span>
-                            <p class="text-[10px] text-slate-400 font-sans italic leading-tight">"${item.response}"</p>
+                            <span class="text-xs sm:text-sm font-medium text-slate-500 font-heading leading-tight mb-1">${item.tactic}</span>
+                            <p class="text-xs sm:text-sm text-slate-400 font-sans italic leading-snug">"${item.response}"</p>
                         `;
                     }
                 }
